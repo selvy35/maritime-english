@@ -1,34 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maritime English</title>
-    <link rel="stylesheet" href="../static/css/style.css">
-</head>
-<body>
-    <header class="header">
-        <img src="../static/img/logo.svg" alt="logo" width="30" height="30">
-        <ul class="main-list"></ul>
-      </header>
-      <main class="main-login">
-        {% block content %}
-        <form action="{{ url_for('login') }}" method="POST" class="login">
-            <p class="error">{{error}}</p>
-            
-            <label for="email">
-                <input class="form__input" type="email" name="email" id="email" placeholder="Username" required>
-            </label>
-
-            <label for="password">
-                <input class="form__input" type="password" name="password" id="password" placeholder="Password" required>
-            </label>
-
-            <button class="form__button">Login</button>
-            <a href="/reg" class="form__button reg__link">Sign Up</a>
-        </form>
-        {% endblock %}
-      </main>
-</body>
-</html>
+{% extends 'base.html' %}
+{% block title %}Login - Maritime English{% endblock %}
+{% block content %}
+<main class="container my-5">
+    <h1 class="text-center">Login</h1>
+    <form method="POST" class="w-50 mx-auto">
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+        <button type="submit" class="btn btn-success btn-lg w-100">Login</button>
+    </form>
+    <p class="text-center mt-3">Don't have an account? <a href="{{ url_for('register') }}">Register</a></p>
+</main>
+{% endblock %}

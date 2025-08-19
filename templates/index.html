@@ -1,10 +1,33 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-</head>
-<body>
-    <p>Ini adalah program pertama saya</p>
-</body>
-</html>
+{% extends 'base.html' %}
+{% block title %}Maritime English Learning{% endblock %}
+{% block content %}
+<header class="bg-primary text-white py-3">
+    <div class="container d-flex justify-content-between align-items-center">
+        <div class="logo d-flex align-items-center">
+            <img src="{{ url_for('static', filename='img/anchor.png') }}" alt="Maritime English Logo" style="height: 40px;">
+            <span class="ms-2 fs-4">Maritime English</span>
+        </div>
+        <div class="site-language">SITE LANGUAGE: ENGLISH</div>
+    </div>
+</header>
+
+<main class="container my-5">
+    <!-- <div class="character-container">
+        <img src="{{ url_for('static', filename='img/kapten-kiko.png') }}" alt="Kapten Kiko" class="character-img">
+        <span class="character-text">Ahoy, Nakama! Ready to sail through Maritime English?</span>
+    </div> -->
+    <div class="row align-items-center">
+        <div class="col-md-6 order-md-2">
+            <img src="{{ url_for('static', filename='img/kapten-kiko.png') }}" alt="Kapten Kiko" class="img-fluid kapten-kiko-illustration">
+        </div>
+        <div class="col-md-6 order-md-1 text-center text-md-start">
+            <h1>The free, fun, and effective way to learn Maritime English!</h1>
+            <p>Master maritime vocabulary and phrases for navigation, safety, and communication at sea.</p>
+            <div class="buttons mt-4 d-flex flex-column flex-md-row gap-2">
+                <a href="{{ url_for('register') }}" class="btn btn-success btn-lg">GET YOUR TICKET</a>
+                <a href="{{ url_for('login') }}" class="btn btn-outline-primary btn-lg">I ALREADY HAVE A TICKET</a>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
