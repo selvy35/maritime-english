@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Unit {{ unit_id }}: Formative Test{% endblock %}
+{% block content %}
+<main class="container my-5">
+    <div class="character-container">
+        <img src="{{ url_for('static', filename='img/kapten-kiko.png') }}" alt="Kapten Kiko" class="character-img">
+        <span class="character-text">Test your skills, Nakama! Let's see what you know!</span>
+    </div>
+    <h1 class="text-center">Unit {{ unit_id }}: Basic Maritime Vocabulary</h1>
+    <h2>Formative Test</h2>
+    <p>Choose the correct meaning for each word:</p>
+    <form method="POST" action="{{ url_for('complete_section', unit_id=unit_id, section='formative_test') }}">
+        {% for vocab in vocabularies %}
+            <div class="mb-3">
+                <label class="form-label"><strong>{{ vocab.word }}</strong></label>
+                <div>
+                    {% for option in vocabularies %}
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" name="test_{{ vocab.id }}" value="{{ option.meaning }}" required>
+                            <label class="form-check-label">{{ option.meaning }}</label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+        <input type="hidden" name="score" value="90"> <!-- Skor contoh -->
+        <button type="submit" class="btn btn-success btn-lg w-100">Submit Test</button>
+    </form>
+    <div class="mt-4 text-center">
+        <a href="{{ url_for('learning_unit', unit_id=unit_id, section='evaluation') }}" class="btn btn-primary btn-lg">Go to Evaluation</a>
+    </div>
+</main>
+{% endblock %}

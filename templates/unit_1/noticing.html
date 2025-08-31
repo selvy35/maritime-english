@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Unit {{ unit_id }}: Exercises{% endblock %}
+{% block content %}
+<main class="container my-5">
+    <div class="character-container">
+        <img src="{{ url_for('static', filename='img/kapten-kiko.png') }}" alt="Kapten Kiko" class="character-img">
+        <span class="character-text">Time to practice, Nakama! Match the words!</span>
+    </div>
+    <h1 class="text-center">Unit {{ unit_id }}: Basic Maritime Vocabulary</h1>
+    <h2>Exercises</h2>
+    <p>Match each word to its correct meaning:</p>
+    <form method="POST" action="{{ url_for('complete_section', unit_id=unit_id, section='exercises') }}">
+        {% for vocab in vocabularies %}
+            <div class="mb-3">
+                <label class="form-label"><strong>{{ vocab.word }}</strong></label>
+                <select name="answer_{{ vocab.id }}" class="form-control">
+                    {% for option in vocabularies %}
+                        <option value="{{ option.meaning }}">{{ option.meaning }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        {% endfor %}
+        <input type="hidden" name="score" value="80">
+        <button type="submit" class="btn btn-success btn-lg w-100">Submit Answers</button>
+    </form>
+    <div class="mt-4 text-center">
+        <a href="{{ url_for('learning_unit', unit_id=unit_id, section='tasks') }}" class="btn btn-primary btn-lg">Go to Tasks</a>
+    </div>
+</main>
+{% endblock %}

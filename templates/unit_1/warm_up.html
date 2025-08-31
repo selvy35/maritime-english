@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block title %}Unit 1: Warm-Up - Alphabet Bingo{% endblock %}
+{% block content %}
+<main class="container my-5 game-main">
+    <h1 class="text-center">Warm-Up - Alphabet Bingo</h1>
+    <p class="text-center lead">Listen to maritime terms and tap the correct letter or number. Reach 100 points to set sail!</p>
+
+    <!-- Game Container -->
+    <div class="game-container text-center p-4">
+        {% if progress and progress.completed %}
+            <div class="alert alert-info">
+                ✅ Warm-Up sudah selesai. Skor Anda: {{ progress.score }}/100
+            </div>
+        {% else %}
+        <!-- Score and Progress -->
+            <div class="mb-4">
+                <h3>Score: <span id="score">0</span>/100</h3>
+                <div class="progress" style="height: 20px;">
+                    <div id="progress-bar" class="progress-bar bg-success" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+        {% endif %}
+
+        <!-- Alphabet and Number Grid -->
+        <div class="row justify-content-center mb-4 game-grid">
+            {% for letter in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' %}
+                <div class="col-3 col-md-2 col-lg-1 p-1">
+                    <button class="btn btn-maritime letter-btn" data-value="{{ letter }}">
+                        <span>{{ letter }}</span>
+                        <img src="{{ url_for('static', filename='img/anchor.png') }}" alt="icon" class="btn-icon">
+                    </button>
+                </div>
+            {% endfor %}
+            {% for number in range(0, 10) %}
+                <div class="col-3 col-md-2 col-lg-1 p-1">
+                    <button class="btn btn-maritime letter-btn" data-value="{{ number }}">
+                        <span>{{ number }}</span>
+                        <img src="{{ url_for('static', filename='img/compass.png') }}" alt="icon" class="btn-icon">
+                    </button>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Audio Button -->
+        <div class="mb-4">
+            <button class="btn btn-maritime btn-lg btn-compass" id="play-audio">
+                <img src="{{ url_for('static', filename='img/compass.png') }}" alt="Play" class="compass-icon"> Play Sound
+            </button>
+        </div>
+
+        <!-- Feedback Area -->
+        <div id="feedback" class="alert d-none"></div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="modal fade" id="completionModal" tabindex="-1" aria-labelledby="completionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content text-center p-4">
+        <h2 id="completionModalLabel" class="mb-3">🎉 Congratulations!</h2>
+        <p class="lead">You’ve successfully completed the Warm-Up.<br>Score: <span id="final-score">100</span>/100</p>
+        <a href="{{ url_for('learning_unit', unit_id=1, section='input_material') }}" class="btn btn-primary btn-lg mt-3">
+            Next: Explanation
+        </a>
+        </div>
+    </div>
+    </div>
+
+</main>
+
+<script src="{{ url_for('static', filename='js/warmup.js') }}"></script>
+{% endblock %}

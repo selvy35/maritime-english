@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Unit {{ unit_id }}: Evaluation & Reflection{% endblock %}
+{% block content %}
+<main class="container my-5">
+    <div class="character-container">
+        <img src="{{ url_for('static', filename='img/kapten-kiko.png') }}" alt="Kapten Kiko" class="character-img">
+        <span class="character-text">Great job, Nakama! Let's reflect on your progress!</span>
+    </div>
+    <h1 class="text-center">Unit {{ unit_id }}: Basic Maritime Vocabulary</h1>
+    <h2>Evaluation & Reflection</h2>
+    <p>Your progress in this unit:</p>
+    <ul class="list-group mb-4">
+        <li class="list-group-item">Explanation: {% if progress and progress.section == 'explanation' and progress.completed %}Completed{% else %}Not completed{% endif %}</li>
+        <li class="list-group-item">Exercises: {% if progress and progress.section == 'exercises' and progress.completed %}Completed (Score: {{ progress.score }}){% else %}Not completed{% endif %}</li>
+        <li class="list-group-item">Tasks: {% if progress and progress.section == 'tasks' and progress.completed %}Completed{% else %}Not completed{% endif %}</li>
+        <li class="list-group-item">Formative Test: {% if progress and progress.section == 'formative_test' and progress.completed %}Completed (Score: {{ progress.score }}){% else %}Not completed{% endif %}</li>
+    </ul>
+    <p>Reflect: What did you learn? What was challenging?</p>
+    <form method="POST" action="{{ url_for('complete_section', unit_id=unit_id, section='evaluation') }}">
+        <div class="mb-3">
+            <textarea class="form-control" name="reflection" rows="4" placeholder="Write your thoughts..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-success btn-lg w-100">Submit Reflection</button>
+    </form>
+</main>
+{% endblock %}

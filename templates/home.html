@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Home - Maritime English{% endblock %}
+{% block content %}
+<header class="bg-primary text-white py-3">
+    <div class="container d-flex justify-content-between align-items-center">
+        <div class="logo d-flex align-items-center">
+            <img src="{{ url_for('static', filename='img/anchor.png') }}" alt="Maritime English Logo" style="height: 40px;">
+            <span class="ms-2 fs-4">Maritime English</span>
+        </div>
+        <div class="site-language">SITE LANGUAGE: ENGLISH</div>
+    </div>
+</header>
+
+<main class="container my-5">
+    <div class="character-container">
+        <img src="{{ url_for('static', filename='img/kapten-kiko.png') }}" alt="Kapten Kiko" class="character-img">
+        <span class="character-text">Ahoy, Nakama! Choose a unit to start your maritime adventure!</span>
+    </div>
+    <h1 class="text-center">Learning Units</h1>
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        {% for unit in units %}
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Unit {{ unit.id }}: {{ unit.title }}</h5>
+                        <p class="card-text">Learn essential maritime English skills!</p>
+                        {% if unit.id == 1 %}
+                            <a href="{{ url_for('warm_up', unit_id=unit.id) }}" class="btn btn-success">Start Unit</a>
+                        {% else %}
+                            <a href="{{ url_for('learning_unit', unit_id=unit.id, section='explanation') }}" class="btn btn-success">Start Unit</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</main>
+{% endblock %}

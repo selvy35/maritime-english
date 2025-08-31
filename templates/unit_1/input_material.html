@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Unit {{ unit_id }}: Explanation{% endblock %}
+{% block content %}
+<main class="container my-5">
+    <div class="character-container">
+        <img src="{{ url_for('static', filename='img/kapten-kiko.png') }}" alt="Kapten Kiko" class="character-img">
+        <span class="character-text">Ayo pelajari kosa kata dasar maritim, Nakama! Click the speaker to hear pronunciation!</span>
+    </div>
+    <h1 class="text-center">Unit {{ unit_id }}: Basic Maritime Vocabulary</h1>
+    <h2>Wordlist</h2>
+    <p>Learn these key maritime terms:</p>
+    {% for vocab in vocabularies %}
+        <div class="vocab-card">
+            <img src="{{ url_for('static', filename=vocab.image) }}" alt="{{ vocab.word }}" class="vocab-img">
+            <div class="vocab-text">
+                <h2>{{ vocab.word }} <span class="ipa">{{ vocab.ipa }}</span> <span class="pos">noun</span></h2>
+                <p>{{ vocab.meaning }}</p>
+                <p class="example">→ {{ vocab.example }}</p>
+                <button onclick="playTTS('{{ vocab.example }}')">🔊 Listen</button>
+            </div>
+        </div>
+    {% endfor %}
+    <div class="mt-4 text-center">
+        <form method="POST" action="{{ url_for('complete_section', unit_id=unit_id, section='explanation') }}">
+            <input type="hidden" name="score" value="50"> 
+            <button type="submit" class="btn btn-success btn-lg">Mark as Completed</button>
+        </form>
+        <a href="{{ url_for('learning_unit', unit_id=unit_id, section='exercises') }}" class="btn btn-primary btn-lg mt-2">Go to Exercises</a>
+    </div>
+</main>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Unit {{ unit_id }}: Tasks{% endblock %}
+{% block content %}
+<main class="container my-5">
+    <div class="character-container">
+        <img src="{{ url_for('static', filename='img/kapten-kiko.png') }}" alt="Kapten Kiko" class="character-img">
+        <span class="character-text">Ready for a challenge, Nakama? Write a sentence!</span>
+    </div>
+    <h1 class="text-center">Unit {{ unit_id }}: Basic Maritime Vocabulary</h1>
+    <h2>Tasks</h2>
+    <p>Use each word in a sentence:</p>
+    <form method="POST" action="{{ url_for('complete_section', unit_id=unit_id, section='tasks') }}">
+        {% for vocab in vocabularies %}
+            <div class="mb-3">
+                <label for="task_{{ vocab.id }}" class="form-label"><strong>{{ vocab.word }}</strong></label>
+                <textarea class="form-control" id="task_{{ vocab.id }}" name="task_{{ vocab.id }}" rows="2" placeholder="Write a sentence using {{ vocab.word }}..."></textarea>
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-success btn-lg w-100">Submit Tasks</button>
+    </form>
+    <div class="mt-4 text-center">
+        <a href="{{ url_for('learning_unit', unit_id=unit_id, section='formative_test') }}" class="btn btn-primary btn-lg">Go to Formative Test</a>
+    </div>
+</main>
+{% endblock %}
