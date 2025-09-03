@@ -1,0 +1,33 @@
+[
+  {
+    "type": "multiple_choice",
+    "prompt": "Listen and choose the correct spelling",
+    "audio": "/speak?text=ANTARA",
+    "choices": ["ANTARA", "ANTRA", "ANTER", "ANTURA"],
+    "answer": "ANTARA"
+  },
+  {
+    "type": "arrange",
+    "prompt": "Arrange this dialogue",
+    "audio": "/speak?text=This is MV ANTARA Call Sign ABC1",
+    "words": [
+      { "text": "This", "meaning": "Ini" },
+      { "text": "is", "meaning": "adalah" },
+      { "text": "MV", "meaning": "Motor Vessel (kapal)" },
+      { "text": "ANTARA", "meaning": "Nama kapal" },
+      { "text": "Call", "meaning": "Panggilan" },
+      { "text": "Sign", "meaning": "Tanda" },
+      { "text": "ABC1", "meaning": "Kode panggilan" }
+    ],
+    "answer": ["This", "is", "MV", "ANTARA", "Call", "Sign", "ABC1"]
+  },
+  {
+    "type": "matching",
+    "prompt": "Match the audio with the correct word",
+    "pairs": [
+      { "audio": "/speak?text=A", "text": "A" },
+      { "audio": "/speak?text=B", "text": "B" },
+      { "audio": "/speak?text=C", "text": "C" }
+    ]
+  }
+]

@@ -1,31 +1,72 @@
 {% extends 'base.html' %}
-{% block title %}Unit {{ unit_id }}: Explanation{% endblock %}
+{% block title %}Unit 1: Input Material - Alphabet & Numbers{% endblock %}
 {% block content %}
-<main class="container my-5">
-    <div class="character-container">
-        <img src="{{ url_for('static', filename='img/kapten-kiko.png') }}" alt="Kapten Kiko" class="character-img">
-        <span class="character-text">Ayo pelajari kosa kata dasar maritim, Nakama! Click the speaker to hear pronunciation!</span>
-    </div>
-    <h1 class="text-center">Unit {{ unit_id }}: Basic Maritime Vocabulary</h1>
-    <h2>Wordlist</h2>
-    <p>Learn these key maritime terms:</p>
-    {% for vocab in vocabularies %}
-        <div class="vocab-card">
-            <img src="{{ url_for('static', filename=vocab.image) }}" alt="{{ vocab.word }}" class="vocab-img">
-            <div class="vocab-text">
-                <h2>{{ vocab.word }} <span class="ipa">{{ vocab.ipa }}</span> <span class="pos">noun</span></h2>
-                <p>{{ vocab.meaning }}</p>
-                <p class="example">→ {{ vocab.example }}</p>
-                <button onclick="playTTS('{{ vocab.example }}')">🔊 Listen</button>
+<main class="container my-5 learning-material">
+    <h1 class="text-center">📚 Unit 1: Input Material</h1>
+    <p class="text-center lead">
+        Practice the <strong>alphabet</strong>, <strong>numbers</strong>, and basic <strong>ship communication phrases</strong>.
+    </p>
+
+    <!-- Section: Audio Model -->
+    <section class="mb-5">
+        <h2>🔊 Audio Models</h2>
+        <p>Listen and repeat the following:</p>
+        <div class="row">
+            <div class="col-md-6">
+                <h5>Alphabet A–Z</h5>
+                <button class="btn btn-outline-primary m-1" onclick="playTTS('A B C D E F G H I J K L M N O P Q R S T U V W X Y Z')">▶️ Play Alphabet</button>
+            </div>
+            <div class="col-md-6">
+                <h5>Numbers 1–99</h5>
+                <button class="btn btn-outline-success m-1" onclick="playTTS('One Two Three Four Five Six Seven Eight Nine Ten ... Ninety Nine')">▶️ Play Numbers</button>
+            </div>
+            <div class="col-md-6 mt-3">
+                <h5>MMSI Digits (0–9)</h5>
+                <button class="btn btn-outline-info m-1" onclick="playTTS('Zero One Two Three Four Five Six Seven Eight Nine')">▶️ Play MMSI Digits</button>
             </div>
         </div>
-    {% endfor %}
-    <div class="mt-4 text-center">
-        <form method="POST" action="{{ url_for('complete_section', unit_id=unit_id, section='explanation') }}">
-            <input type="hidden" name="score" value="50"> 
-            <button type="submit" class="btn btn-success btn-lg">Mark as Completed</button>
-        </form>
-        <a href="{{ url_for('learning_unit', unit_id=unit_id, section='exercises') }}" class="btn btn-primary btn-lg mt-2">Go to Exercises</a>
+    </section>
+
+    <!-- Section: Visual Ship Card -->
+    <section class="mb-5">
+        <h2>🚢 Ship Identity Card</h2>
+        <div class="card shadow-sm p-3 mb-3">
+            <div class="card-body">
+                <h4 class="card-title">MV ANTARA</h4>
+                <p><strong>MMSI:</strong> 525123456</p>
+                <p><strong>Call Sign:</strong> A-B-C-1</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section: Sample Dialogue -->
+    <section class="mb-5">
+        <h2>🗣️ Sample Dialogue</h2>
+        <div class="card p-3 shadow-sm">
+            <p><strong>Radio Operator:</strong> "This is MV ANTARA, Call Sign A-B-C-1."</p>
+            <p><strong>Station:</strong> "MV ANTARA, Call Sign A-B-C-1, roger."</p>
+        </div>
+    </section>
+
+    <!-- Section: Language Focus -->
+    <section class="mb-5">
+        <h2>📌 Language Focus</h2>
+        <ul>
+            <li><strong>Vocabulary:</strong> Alphabet (A–Z), Numbers (1–99), MMSI digits</li>
+            <li><strong>Structure:</strong> 
+                <ul>
+                    <li>"This is [Ship Name]"</li>
+                    <li>"Call Sign [X-Y-Z]"</li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+
+    <!-- Navigation -->
+    <div class="text-center">
+        <a href="{{ url_for('learning_unit', unit_id=1, section='practice') }}" class="btn btn-primary btn-lg">
+            Next: Practice
+        </a>
     </div>
 </main>
 {% endblock %}

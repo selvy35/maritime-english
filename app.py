@@ -8,6 +8,8 @@ from config import SECRET_KEY, DATABASE_NAME
 import uuid
 from gtts import gTTS
 from utils import delete_file_later
+from io import BytesIO
+from flask import send_file
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = SECRET_KEY
@@ -91,7 +93,7 @@ def login():
 @app.route('/unit/<int:unit_id>/<section>')
 @login_required
 def learning_unit(unit_id, section): 
-    valid_sections = ['warm_up', 'input_material', 'noticing', 'control_practice', 'guided_practice', 'authentic_task', 'assesment']
+    valid_sections = ['warm_up', 'alphabet', 'noticing', 'control_practice', 'guided_practice', 'authentic_task', 'assesment']
     if section not in valid_sections:
         flash('Invalid section.')
         return redirect(url_for('index'))
@@ -101,7 +103,7 @@ def learning_unit(unit_id, section):
     if current_user.is_authenticated:
         progress = UserProgress.query.filter_by(user_id=current_user.id, unit=unit_id, section=section).first()
     
-    return render_template(f'unit_{unit_id}/{section}.html', unit_id=unit_id, vocabularies=vocabularies, progress=progress)
+    return render_template(f'unit_{unit_id}/{section}.html', section=section, unit_id=unit_id, vocabularies=vocabularies, progress=progress)
 
 @app.route('/complete_section/<int:unit_id>/<section>', methods=['POST'])
 @login_required
@@ -147,24 +149,18 @@ def warmup_history_batch():
     db.session.commit()
     return {"status": "saved", "count": len(history_list)}
 
-@app.route("/speak", methods=["POST"])
+@app.route("/speak", methods=["GET"])
 def tts():
-    text = request.json.get("text")
+    text = request.args.get("text")
     if not text:
         return "No text provided", 400
 
-    audio_dir = os.path.join(app.root_path, "static", "audio")
-    os.makedirs(audio_dir, exist_ok=True)
-
-    filename = f"{uuid.uuid4()}.mp3"
-    filepath = os.path.join(audio_dir, filename)
-
+    mp3_fp = BytesIO()
     tts = gTTS(text)
-    tts.save(filepath)
+    tts.write_to_fp(mp3_fp)
+    mp3_fp.seek(0)
 
-    delete_file_later(filepath, delay=10)
-
-    return {"url": url_for("static", filename=f"audio/{filename}")}
+    return send_file(mp3_fp, mimetype="audio/mpeg")
 
 def init_db():
     # bisa menggunakan json untuk init databasenya

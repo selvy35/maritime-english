@@ -23,24 +23,28 @@ const maritimeTerms = [
 // =========================
 // Helpers
 // =========================
-async function playTTS(text) {
-    try {
-        const response = await fetch("/speak", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ text })
-        });
+// async function playTTS(text) {
+//     try {
+//         const response = await fetch("/speak", {
+//             method: "POST",
+//             headers: { "Content-Type": "application/json" },
+//             body: JSON.stringify({ text })
+//         });
 
-        if (!response.ok) {
-            throw new Error("Failed to generate audio.");
-        }
+//         if (!response.ok) {
+//             throw new Error("Failed to generate audio.");
+//         }
 
-        const data = await response.json();
-        new Audio(data.url).play();
-    } catch (err) {
-        console.error(err);
-        alert("Error playing audio.");
-    }
+//         const data = await response.json();
+//         new Audio(data.url).play();
+//     } catch (err) {
+//         console.error(err);
+//         alert("Error playing audio.");
+//     }
+// }
+
+function playTTS(text) {
+    new Audio(`/speak?text=${encodeURIComponent(text)}`).play();
 }
 
 function recordAnswer(question, correctAnswer, userAnswer, isCorrect) {
@@ -63,8 +67,8 @@ function playRandomTerm() {
     currentAnswer = currentQuestion.letter;
 
     const feedback = document.getElementById('feedback');
-    feedback.className = "alert alert-info"; // reset + info
-    feedback.innerText = `Playing audio for: "${currentQuestion.term}"`;
+    // feedback.className = "alert alert-info"; // reset + info
+    // feedback.innerText = `Playing audio for: "${currentQuestion.term}"`;
 
     playTTS(currentQuestion.term);
 }
